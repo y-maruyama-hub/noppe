@@ -1,4 +1,4 @@
-package strsub
+package noppe
 
 import (
 	// "fmt"
