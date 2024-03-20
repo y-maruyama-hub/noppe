@@ -7,27 +7,27 @@ import (
 )
 
 
-var zipnreg *regexp.Regexp
-var ziphreg *regexp.Regexp
-var telnreg *regexp.Regexp
-var telhreg *regexp.Regexp
-var mailreg *regexp.Regexp
-var nbrnreg *regexp.Regexp
-var nbrfreg *regexp.Regexp
+var Zipnreg *regexp.Regexp
+var Ziphreg *regexp.Regexp
+var Telnreg *regexp.Regexp
+var Telhreg *regexp.Regexp
+var Mailreg *regexp.Regexp
+var Nbrnreg *regexp.Regexp
+var Nbrfreg *regexp.Regexp
 
 
 func init() {
 
-	zipnreg = regexp.MustCompile(`^[0-9]{7}$`)
-	ziphreg = regexp.MustCompile(`^[0-9]{3}-{1}[0-9]{4}$`)
+	Zipnreg = regexp.MustCompile(`^[0-9]{7}$`)
+	Ziphreg = regexp.MustCompile(`^[0-9]{3}-{1}[0-9]{4}$`)
 
-	telnreg = regexp.MustCompile(`^[0-9]{10,11}$`)
-	telhreg = regexp.MustCompile(`^[0-9]{3,4}-{1}[0-9]{2,4}-{1}[0-9]{4}$`)
+	Telnreg = regexp.MustCompile(`^[0-9]{10,11}$`)
+	Telhreg = regexp.MustCompile(`^[0-9]{3,4}-{1}[0-9]{2,4}-{1}[0-9]{4}$`)
 
-	mailreg = regexp.MustCompile(`^[a-zA-Z0-9_.+-]+@((?:[-a-z0-9]+\.)+[a-z]{2,})$`)
+	Mailreg = regexp.MustCompile(`^[a-zA-Z0-9_.+-]+@((?:[-a-z0-9]+\.)+[a-z]{2,})$`)
 
-	nbrnreg = regexp.MustCompile(`^[1-9]+[0-9]?$`)
-	nbrfreg = regexp.MustCompile(`^(0|[1-9]+)\.[0-9]+$`)
+	Nbrnreg = regexp.MustCompile(`^[1-9]+[0-9]?$`)
+	Nbrfreg = regexp.MustCompile(`^(0|[1-9]+)\.[0-9]+$`)
 }
 
 
@@ -51,9 +51,6 @@ func IsNotEmpty(input *interface{}) bool {
 			}
 
 	}
-
-
-
 
 	return res
 
@@ -125,38 +122,44 @@ func IsFullKana(input string,require bool) bool {
 }
 
 
-func IsTel(input string,require bool) bool {
+func IsNbrTel(input string,require bool) bool {
 
 	if !require && len(input)==0 {
 		return true
 	}
 
-	res := telnreg.MatchString(input)
-	
-	if res {
-		return true
-	}
-
-	return telhreg.MatchString(input)
+	return Telnreg.MatchString(input)
 }
 
 
-
-func IsZipcode(input string,require bool) bool {
+func IsHyphenedTel(input string,require bool) bool {
 
 	if !require && len(input)==0 {
 		return true
 	}
 
-	res := zipnreg.MatchString(input)
+	return Telhreg.MatchString(input)
+}
 
-	if res {
+
+func IsNbrZipcode(input string,require bool) bool {
+
+	if !require && len(input)==0 {
 		return true
 	}
 
-	return ziphreg.MatchString(input)
+	return  Zipnreg.MatchString(input)
 }
 
+
+func IsHyphenedZipcode(input string,require bool) bool {
+
+	if !require && len(input)==0 {
+		return true
+	}
+
+	return Ziphreg.MatchString(input)
+}
 
 
 func IsMailadr(input string,require bool) bool {
@@ -165,7 +168,7 @@ func IsMailadr(input string,require bool) bool {
 		return true
 	}
 
-	return mailreg.MatchString(input)
+	return Mailreg.MatchString(input)
 }
 
 
@@ -183,11 +186,11 @@ func IsNumeric(input string,require bool) bool {
 	p := strings.Split(input,".")
 
 	if len(p) == 1 {
-		return nbrnreg.MatchString(input)
+		return Nbrnreg.MatchString(input)
 	}
 
 	if len(p) == 2 {
-		return nbrfreg.MatchString(input)
+		return Nbrfreg.MatchString(input)
 	}
 
 	return false
