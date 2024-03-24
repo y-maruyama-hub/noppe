@@ -111,10 +111,8 @@ func IsFullKana(input string,require bool) bool {
 	b := true 
 
 	for _,x := range xx {
-		if x < 0x30A1 || 0x30F6 < x {
-			// fmt.Printf("%d %d %c %x \n",i,x,x,x)
-			b=false
-			// return false
+		if (x < 0x30A1 || 0x30F6 < x) && (x != 0x30fc) {
+			b =false
 		}
 	} 
 

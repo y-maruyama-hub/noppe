@@ -94,7 +94,7 @@ func TestIsFullKana(t *testing.T) {
 	tests := []Input{
 		Input{"",false,true},
 		Input{"やまだたろう",true,false},
-		Input{"カタカナ",true,true},
+		Input{"カタカーナ",true,true},
 		Input{"aaa,",true,false},
 		Input{"'bbb",true,false},
 		Input{"ｶﾀｶﾅ",true,false},
